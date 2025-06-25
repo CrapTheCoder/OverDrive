@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        :root {
+            --bg-color: #202124;
+            --text-color: #e8eaed;
+            --text-secondary-color: #bdc1c6;
+            --primary-button-bg: #8ab4f8;
+            --primary-button-text: #202124;
+            --secondary-button-bg: #3c4043;
+            --input-bg: #3c4043;
+            --input-border: #5f6368;
+            --divider-color: #3c4043;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            min-width: 380px;
+        }
+
+        .container {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        h3 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .view { display: none; }
+        .view.active { display: block; }
+
+        .form-group { margin: 20px 0; }
+
+        label {
+            font-size: 13px;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary-color);
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            color: var(--text-color);
+        }
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-button-bg);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 8px;
+            border: none;
+            transition: background-color 0.2s;
+        }
+        button:disabled {
+            cursor: not-allowed;
+            background-color: #303134 !important;
+            color: #80868b !important;
+        }
+
+        #syncButton {
+            background-color: var(--primary-button-bg);
+            color: var(--primary-button-text);
+        }
+        #addButton, #saveButton {
+            background-color: #34A853;
+            color: white;
+        }
+        #cancelButton {
+            background-color: var(--secondary-button-bg);
+            color: var(--text-color);
+        }
+
+        .button-group { display: flex; gap: 10px; }
+
+        #status {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--text-secondary-color);
+            min-height: 15px;
+        }
+
+        .radio-group label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h3>OverDrive Sync</h3>
+
+    <div id="mainView" class="view active">
+        <div class="form-group">
+            <label for="projectSelect">Choose a project:</label>
+            <select id="projectSelect"><option>-- Initializing --</option></select>
+        </div>
+        <button id="syncButton">Sync Selected Project</button>
+        <button id="addButton">Link New Project</button>
+    </div>
+
+    <div id="addView" class="view">
+        <div class="form-group">
+            <label for="projectNameInput">Project Name</label>
+            <input type="text" id="projectNameInput" placeholder="e.g., My Resume">
+        </div>
+        <div class="form-group radio-group">
+            <label><input type="radio" name="linkMethod" value="create" checked> Create a new PDF on Drive</label>
+            <label><input type="radio" name="linkMethod" value="link"> Link to existing PDF</label>
+        </div>
+        <div class="form-group" id="linkUrlGroup" style="display: none;">
+            <label for="driveUrlInput">Existing Google Drive PDF Link</label>
+            <input type="text" id="driveUrlInput" placeholder="Paste link here">
+        </div>
+        <div class="button-group">
+            <button id="saveButton">Save Project</button>
+            <button id="cancelButton">Cancel</button>
+        </div>
+    </div>
+
+    <div id="status">Initializing...</div>
+</div>
+
+<script src="sidepanel.js"></script>
+</body>
+</html>
